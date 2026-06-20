@@ -1,23 +1,99 @@
-# Changes from Stratix and CloudNow (to Cirrus)
+# Changes & GPL v3 Compliance Notice
 
-This document outlines the major architectural and design changes made to combine **Stratix** (the native Apple TV client for Xbox Game Pass/xCloud cloud gaming) and **CloudNow** (the native Apple TV client for NVIDIA GeForce NOW) into the unified combined client **Cirrus**.
+Cirrus is a derivative work that incorporates and modifies source code from two GPL v3 licensed open-source projects. In accordance with the GNU General Public License v3, this document provides a complete record of the incorporated upstream works, the modifications made, and the license obligations of this project.
 
-## 1. Project Structure & Integration
-- **Unified Workspace**: Replaced separate Xcode configurations (`Stratix.xcworkspace` and `CloudNow.xcodeproj`) with a single, multi-platform workspace mapping both macOS and tvOS targets.
-- **Unified Launch Pipeline**: Created `CloudNowApp.swift` as a single main entry point that injects both `AuthManager` (GFN state) and `AppCoordinator` (Xbox/Stratix state) environments.
-- **Combined Shell**: Wired the top-level navigation container in `AuthenticatedShellView.swift` to load the unified `CloudLibraryView`.
+Cirrus is licensed under the **GNU General Public License v3.0 or later**. The full license text is available in the [LICENSE](LICENSE) file and at <https://www.gnu.org/licenses/gpl-3.0.html>.
 
-## 2. User Interface & Navigation
-- **Unified Browse Experience**: Merged the Xbox library view and GeForce NOW game library grids into a unified dashboard.
-- **Lightweight Top Navigation Capsules**: Implemented a modern, layout-neutral navigation bar styling at the top of the shell with custom rounded capsules for profile stats, navigation tabs, and system status metrics.
-- **Integrated Settings Suite**: Redesigned the settings interface inside `CloudLibrarySettingsView.swift` to group configuration cards for Xbox Cloud Gaming (stream resolution, FPS, diagnostics), GeForce NOW (target FPS, resolution, custom bitrates), and General/Accessibility parameters.
+---
 
-## 3. Streaming Experience Improvements
-- **Xbox Stream Loading Screen Blur**: Added a high-end backdrop blur effect to the xCloud connecting view to match GFN stream transition aesthetics.
-- **Background Catalog Caching & Refreshing**: Implemented background token refresh cycles and local GFN game catalogs caching to eliminate 20-second startup delay screens.
-- **Non-blocking Refresh Indicators**: Replaced full-screen block screens with localized, rotating spinning loaders next to service headers when syncing catalog updates.
+## Incorporated Upstream Works
 
-## 4. Performance & Hardening
-- **Upscaler Default Configuration**: Disabled streaming upscaling by default (`upscalingEnabled = false` in `SettingsStore.swift`) to protect older hardware from frame drops, leaving it optional via settings.
-- **Onboarding Cleanup**: Removed tutorial card overlays, focus indicators, and onboarding walkthrough tour dependencies from both the shell view and settings view to allow immediate app navigation.
-- **Liquid Glass Rendering Fixes**: Replaced unstable `ZStack` background layers with native SwiftUI shape background bindings (`.background(.style, in: Shape)`) to eliminate vertical layout stretching on navigation bars, guide overlays, and diagnostics panels.
+### 1. Stratix
+- **Author**: nafields
+- **Repository**: <https://github.com/nafields/stratix>
+- **License**: GNU General Public License v3.0
+- **Description**: A native Apple TV client for Xbox Cloud Gaming (xCloud / xHome) using WebRTC, LiveKit, and the Microsoft OAuth device flow.
+- **Components incorporated into Cirrus**:
+  - `cloudx/` — the full Stratix Swift package tree (CloudXCore, XCloudAPI, StreamingCore, VideoRenderingKit, DiagnosticsKit, InputBridge, CloudXModels)
+  - `cloudx_backup/` — reference snapshot of Stratix packages prior to integration
+  - Xbox Cloud Gaming authentication flow (Microsoft OAuth 2.0 device flow)
+  - WebRTC session lifecycle, SDP negotiation, and ICE processing
+  - Input bridge (XInput protocol over WebRTC data channel)
+  - Metal video renderer and sample buffer display pipeline
+  - Streaming session orchestration, reconnect policy, and diagnostics
+
+### 2. CloudNow
+- **Author**: Owen Selles
+- **Repository**: <https://github.com/owenselles/CloudNow>
+- **License**: MIT License (compatible with GPL v3 — MIT code may be incorporated into a GPL v3 work)
+- **Description**: A native Apple TV client for NVIDIA GeForce NOW using WebRTC and the cloud.gg OAuth device flow.
+- **Components incorporated into Cirrus**:
+  - `CloudNow/` — the full CloudNow tvOS app source (Auth, Session, Streaming, Video, UI)
+  - `CloudNow.xcodeproj/` — Xcode project, schemes, and asset catalogs
+  - GeForce NOW authentication (cloud.gg OAuth 2.0 PKCE + device flow, Keychain persistence)
+  - GFN session management (CloudMatch REST client, queue UI, zone/region selection)
+  - GFN game catalog client (GraphQL persisted queries)
+  - GFN WebRTC streaming (SDP munging, codec negotiation, input sender)
+  - GFN live stats overlay and stream quality settings
+
+---
+
+## Third-Party Dependencies
+
+The following libraries are used as dependencies and are **not** modified by Cirrus. They are fetched via Swift Package Manager at build time and are not vendored into this repository.
+
+| Library | License | Used For |
+|---------|---------|---------|
+| [livekit/client-sdk-swift](https://github.com/livekit/client-sdk-swift) | Apache 2.0 | Xbox Cloud Gaming WebRTC transport |
+| [livekit/webrtc-xcframework](https://github.com/livekit/webrtc-xcframework) | BSD-style (WebRTC) | WebRTC engine (GFN + Xbox) |
+| [livekit/livekit-uniffi-xcframework](https://github.com/livekit/livekit-uniffi-xcframework) | Apache 2.0 | LiveKit Rust FFI bindings |
+| [apple/swift-collections](https://github.com/apple/swift-collections) | Apache 2.0 | OrderedDictionary, Deque |
+| [apple/swift-async-algorithms](https://github.com/apple/swift-async-algorithms) | Apache 2.0 | Async sequence utilities |
+| [apple/swift-protobuf](https://github.com/apple/swift-protobuf) | Apache 2.0 | Protobuf serialization |
+
+Apache 2.0 is compatible with GPL v3 — Apache 2.0 licensed code may be used in a GPL v3 work.
+
+---
+
+## Modifications Made to Upstream GPL v3 Code (Stratix)
+
+The following changes were made to Stratix source code incorporated into Cirrus. All modifications are also released under GPL v3.
+
+### 1. Project Structure & Integration
+- Replaced `Stratix.xcworkspace` with `CloudNow.xcodeproj` as the unified build entry point, combining both the Stratix Swift packages (`cloudx/`) and the CloudNow tvOS app target into a single project
+- Renamed app-facing target references from "Stratix" to "CloudNow" / "Cirrus" throughout the Xcode project
+
+### 2. User Interface & Navigation
+- Merged the Xbox Game Pass library view and GeForce NOW library grid into a unified `CloudLibraryView` dashboard
+- Added a top navigation capsule bar with tabs for both streaming services and system status indicators
+- Redesigned `CloudLibrarySettingsView.swift` to group Xbox Cloud Gaming, GeForce NOW, and General/Accessibility settings in a single unified settings interface
+- Added an in-app Credits panel to `CloudLibrarySettingsView.swift` acknowledging all upstream authors and contributors
+
+### 3. Streaming & Session Improvements
+- Added high-quality backdrop blur effect to the xCloud connecting/loading view to match GFN stream transition aesthetics
+- Integrated background catalog caching and token refresh cycles from the GFN side to reduce startup latency across both services
+- Replaced full-screen block screens with non-blocking inline refresh indicators
+
+### 4. Performance & Stability
+- Set `upscalingEnabled = false` as the default in `SettingsStore.swift` to prevent frame drops on older hardware
+- Removed onboarding walkthrough overlays and tutorial card dependencies to allow immediate app navigation on launch
+- Replaced unstable `ZStack` background layers with native SwiftUI shape background bindings (`.background(.style, in: Shape)`) to fix layout issues on navigation bars and overlay panels
+
+---
+
+## Source Code Availability
+
+In compliance with GPL v3 Section 6, the complete corresponding source code for Cirrus is publicly available at:
+
+**<https://github.com/verdjs/Cirrus>**
+
+You are free to copy, modify, and distribute this software under the terms of the GNU General Public License v3. Any distribution of Cirrus or a derivative work must also be accompanied by the complete corresponding source code and must be licensed under GPL v3.
+
+---
+
+## Original Copyright Notices
+
+The following original copyright notices are preserved as required by GPL v3:
+
+- Stratix — Copyright © 2024 nafields. Licensed under GPL v3.
+- CloudNow — Copyright © 2026 Owen Selles. Licensed under MIT.
