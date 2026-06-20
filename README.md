@@ -1,78 +1,76 @@
-# CloudNow
+# Cirrus
 
-A native GeForce NOW client for Apple TV. Stream your entire PC game library directly on tvOS with full controller support, no browser, no workarounds.
+A native unified game streaming client for Apple TV. Stream your Xbox Game Pass library via Xbox Cloud Gaming (xCloud) and your PC game library via NVIDIA GeForce NOW — all from one app, no browser, no workarounds.
 
-> **Personal use / sideload only.** This project is not affiliated with, endorsed by, or sponsored by NVIDIA. NVIDIA and GeForce NOW are trademarks of NVIDIA Corporation.
+> **Personal use / sideload only.** This project is not affiliated with, endorsed by, or sponsored by NVIDIA, Microsoft, or Xbox. NVIDIA, GeForce NOW, Xbox, and Xbox Game Pass are trademarks of their respective owners.
 
 > [!WARNING]
-> CloudNow is under active development. Expect bugs, lots of them
+> Cirrus is under active development. Expect bugs.
 
+---
 
+## What's Cirrus?
 
+Cirrus merges two separate open-source Apple TV streaming clients — **CloudNow** (GeForce NOW) by [Owen Selles](https://github.com/owenselles) and **Stratix** (Xbox Cloud Gaming) by [nafields](https://github.com/nafields) — into a single unified tvOS app. See [credits.md](credits.md) for full attribution and [changes.md](changes.md) for a breakdown of what changed.
 
 ---
 
 ## Features
 
-- **Tab bar navigation** — Home, Library, Store, and Settings; fully focus-engine compatible
-- **Home screen** — "Continue Playing" row powered by live active sessions, plus a Favorites row
-- **Library & Store** — browse your linked games separately from the full public catalog; Library and Store both have search; Library supports A→Z, Z→A, and Recently Played sort orders; long-press any card to add/remove from Favorites
-- **Stream quality settings** — resolution up to 4K (tier-dependent), frame rate, codec (H.264/H.265/AV1), color quality (SDR/HDR), keyboard layout, game language, and Low Latency Mode (L4S) from the Settings tab
-- **Codec-aware SDP negotiation** — offer is filtered to your chosen codec before WebRTC negotiation; H.265 prefers Main profile; bandwidth hints sent to prevent server overshoot
-- **Session queue UI** — shows queue phase ("In queue · Position X" → "Preparing your game"); waits indefinitely in queue with position updates; 180-second setup timeout after queue clears; requires two consecutive ready polls before presenting the stream; plays mandatory queue ads via AVPlayer and reports lifecycle events back to CloudMatch
-- **Zone/region selection** — Settings → Server Region shows live queue depths and ping per zone; Automatic mode picks the best zone by weighted score (40% ping + 60% queue depth); powered by the PrintedWaste community API
-- **Microphone support** — voice chat via AirPods or any Bluetooth headset; toggle in Settings; permission requested on first use
-- **Favorites** — long-press any game card in Library or Store to add/remove from Favorites; persisted locally
-- **Full GFN streaming** — WebRTC-based, up to 4K@60fps depending on your GFN plan (tvOS caps at 60 Hz; 120fps ready for when Apple raises the limit)
-- **Controller support** — up to 4 simultaneous MFi/Xbox/PlayStation controllers via the GameController framework; configurable analog stick deadzone (5–30%) and overlay trigger button (Start/≡ or Options/Back ⊟, default: Start)
-- **cloud.gg OAuth login** — device flow; TV shows a QR code and PIN; complete sign-in on any phone, tablet, or computer
-- **Live stats overlay** — bitrate, resolution, FPS, RTT, real packet loss %, and remaining session time (Free/Priority tier) — toggle with Play/Pause (Siri Remote) or long-press the overlay button (controller, default: Start/≡, configurable in Settings)
-- **Keychain persistence** — session tokens stored securely and auto-refreshed on launch
+### Xbox Cloud Gaming (xCloud)
+- Sign in with your Microsoft account via standard OAuth device flow
+- Browse your full Xbox Game Pass catalog
+- Launch and stream games via WebRTC using the LiveKit xCloud SDK
+- Full controller support (MFi, Xbox, PlayStation) via GameController framework
+- Configurable stream resolution, FPS, and diagnostics overlay
 
-## Requirements
+### GeForce NOW (GFN)
+- Sign in via cloud.gg OAuth (QR code + PIN on TV, complete on any device)
+- Browse your linked game library and the full public GFN catalog
+- Stream up to 4K@60fps depending on your GFN plan
+- Live stats overlay — bitrate, resolution, FPS, RTT, packet loss, session time
+- Zone/region selection with live queue depths and ping scoring
+- Codec-aware SDP negotiation (H.264 / H.265 / AV1)
+- Queue position UI with ad playback during high-demand periods
 
-- Apple TV 4K (2nd generation or later) running tvOS 17+
-- Xcode 16+ on a Mac
-- Active GeForce NOW account (Free, Priority, or Ultimate)
-- Apple Developer account (free tier works for sideloading)
+### General
+- Unified home screen with both services
+- Full tvOS focus engine support
+- Up to 4 simultaneous controllers
+- Favorites system (long-press any game card)
+- Keychain-persisted session tokens with auto-refresh
+- Settings panel for per-service stream quality, region, and accessibility options
+
+---
 
 ## Getting Started
 
 ### 1. Clone
 
 ```bash
-git clone https://github.com/owenselles/CloudNow.git
-cd CloudNow
+git clone https://github.com/verdjs/Cirrus.git
+cd Cirrus
 ```
 
-### 2. Add the WebRTC package
+### 2. Open in Xcode
 
-Open `CloudNow.xcodeproj` in Xcode, then:
+Open `CloudNow.xcodeproj` in Xcode 16+.
 
-**File → Add Package Dependencies…**
-Paste: `https://github.com/livekit/webrtc-xcframework`
-Target: **WebRTC**
+Dependencies (LiveKit WebRTC, Swift Collections, Swift Async Algorithms, Swift Protobuf) are resolved automatically via Swift Package Manager on first open.
 
-### 3. Set your Team
-
-Copy the local config template and fill in your Apple Developer Team ID:
+### 3. Set your Team ID
 
 ```bash
 cp Local.xcconfig.example Local.xcconfig
 ```
 
-Edit `Local.xcconfig` and replace `YOUR_TEAM_ID_HERE` with your Team ID (find it at [developer.apple.com](https://developer.apple.com) → Account → Membership).
-
-Then attach it to the project in Xcode:
-**Project navigator → CloudNow project → Info tab → Configurations → expand Debug and Release → set "Based on" to `Local.xcconfig`** for both.
+Edit `Local.xcconfig` and replace `YOUR_TEAM_ID_HERE` with your Apple Developer Team ID (find it at [developer.apple.com](https://developer.apple.com) → Account → Membership).
 
 `Local.xcconfig` is gitignored and should never be committed.
 
 ### 4. Build & Run
 
-Select your Apple TV as the run destination (USB-C or network) and hit **⌘R**.
-
-On first launch the app prompts you to sign in. A QR code and PIN are displayed — scan the QR code or visit the URL on any device and enter the PIN to complete sign-in, then return to the TV.
+Select your Apple TV as the run destination (USB-C or network) and press **⌘R**.
 
 ---
 
@@ -80,68 +78,26 @@ On first launch the app prompts you to sign in. A QR code and PIN are displayed 
 
 ```
 CloudNow/
-├── Auth/
-│   ├── AuthManager.swift           @Observable auth state, Keychain persistence
-│   └── NVIDIAAuthAPI.swift         OAuth 2.0 PKCE, token refresh, user info
-├── Session/
-│   ├── SessionState.swift          Models: GameInfo, SessionInfo, StreamSettings
-│   ├── CloudMatchClient.swift      Session create/poll/stop/active-sessions
-│   └── GamesClient.swift           Game catalog via GraphQL persisted query
-├── Streaming/
-│   ├── GFNStreamController.swift   WebRTC peer connection lifecycle (@Observable)
-│   ├── SignalingClient.swift        WebSocket signaling — SDP offer/answer + ICE
-│   ├── SDPMunger.swift             Codec filtering + bandwidth injection for WebRTC SDP
-│   └── InputSender.swift           GCController/keyboard/mouse/Siri Remote → XInput + GFN protocol (v2/v3) → data channel
-├── Video/
-│   └── VideoSurfaceView.swift      AVSampleBufferDisplayLayer video surface + keyboard/mouse first responder
-└── UI/
-    ├── GamesViewModel.swift        Shared @Observable — games, sessions, favorites, settings
-    ├── MainTabView.swift           Root TabView (Home / Library / Store / Settings)
-    ├── HomeView.swift              Hero banner + Continue Playing + Favorites rows
-    ├── LibraryView.swift           LIBRARY panel grid with favorite toggles
-    ├── StoreView.swift             MAIN catalog grid with "In Library" badges
-    ├── SettingsView.swift          Stream quality pickers + account info + sign out
-    ├── LoginView.swift             Sign-in screen with QR code + PIN display
-    └── StreamView.swift            Full-screen player + HUD stats overlay
+├── CloudXApp/
+│   ├── Auth/                    Microsoft OAuth + GFN OAuth flows, Keychain persistence
+│   ├── Features/
+│   │   ├── CloudLibrary/        Unified game library UI (home, browse, settings)
+│   │   ├── Streaming/           WebRTC session lifecycle, video rendering, input
+│   │   └── Onboarding/          Sign-in flows for both services
+│   └── Core/                    App coordinator, environment injection
+cloudx/
+└── Packages/                    Swift packages: CloudXCore, XCloudAPI, StreamingCore,
+                                 VideoRenderingKit, DiagnosticsKit, InputBridge
 ```
-
-### Protocol
-
-The GFN streaming protocol was independently reverse-engineered from NVIDIA's network traffic. The WebRTC transport is provided by [livekit/webrtc-xcframework](https://github.com/livekit/webrtc-xcframework).
-
-| Layer | Implementation |
-|-------|---------------|
-| Auth | OAuth 2.0 PKCE → `auth.cloud.gg` |
-| Session | REST → CloudMatch (`cloudmatchbeta.nvidiagrid.net`) |
-| Signaling | WebSocket (`/nvst/sign_in`) — SDP offer/answer + ICE |
-| Streaming | WebRTC via [livekit/webrtc-xcframework](https://github.com/livekit/webrtc-xcframework) |
-| Input | XInput binary protocol over WebRTC data channel |
-| Game catalog | GraphQL persisted query → `games.geforce.com` |
 
 ---
 
-## Known Limitations
+## Credits
 
-- **No App Store.** NVIDIA has not published a public API for third-party GFN clients. Sideloading only.
-- **Queue ad playback.** During high demand GFN shows ads while in queue. The app plays them via AVPlayer and reports lifecycle events (start/pause/finish) back to CloudMatch.
-- **Zone/region selection.** Settings → Server Region lets you pick a specific zone or leave it on Automatic (40% ping + 60% queue depth scoring). Zone list + queue depths fetched from the PrintedWaste community API.
-## Contributing
+See [credits.md](credits.md) for full attribution to the original projects and contributors that made Cirrus possible.
 
-PRs welcome, especially for:
-
-- macOS Catalyst or visionOS port
-
-## Sponsoring
-
-If this project is useful to you, consider sponsoring to help keep it maintained.
-
-[![GitHub Sponsors](https://img.shields.io/badge/Sponsor%20on%20GitHub-%E2%9D%A4-pink?style=flat-square&logo=github)](https://github.com/sponsors/owenselles)
+---
 
 ## License
 
 MIT — see [LICENSE](LICENSE).
-
-## Acknowledgements
-
-- [PrintedWaste](https://printedwaste.com) — community API for GFN zone queue depths and region mapping
-- [livekit/webrtc-xcframework](https://github.com/livekit/webrtc-xcframework) — WebRTC for Apple platforms
