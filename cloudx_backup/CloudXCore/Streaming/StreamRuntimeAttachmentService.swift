@@ -1,0 +1,88 @@
+// StreamRuntimeAttachmentService.swift
+// Defines stream runtime attachment service for the Streaming surface.
+//
+
+import Foundation
+// Removed local import for single-target compilation
+// Removed local import for single-target compilation
+// Removed local import for single-target compilation
+
+struct StreamRuntimeInputEnvironment {
+    let setupControllerObservation: @Sendable @MainActor (any StreamingSessionFacade) -> Void
+    let clearStreamingInputBindings: @Sendable @MainActor () -> Void
+    let routeVibration: @Sendable @MainActor (VibrationReport) -> Void
+}
+
+struct StreamRuntimeAttachmentEnvironment {
+    let input: StreamRuntimeInputEnvironment
+}
+
+struct StreamSessionLifecycleEvent {
+    let lifecycle: StreamLifecycleState
+    let disconnectIntent: StreamingDisconnectIntent
+}
+
+@MainActor
+final class StreamRuntimeAttachmentService {
+    private let lifecycleObserver: StreamSessionLifecycleObserver
+
+    init(lifecycleObserver: StreamSessionLifecycleObserver? = nil) {
+        self.lifecycleObserver = lifecycleObserver ?? StreamSessionLifecycleObserver()
+    }
+
+    func attach(
+        session: (any StreamingSessionFacade)?,
+        environment: StreamRuntimeAttachmentEnvironment,
+        onLifecycleChange: @escaping @Sendable @MainActor (StreamSessionLifecycleEvent) -> Void
+    ) -> [StreamAction] {
+        lifecycleObserver.bind(
+            session: session,
+            onLifecycleChange: { event in
+                onLifecycleChange(event)
+            }
+        )
+
+        guard let session else {
+            environment.input.clearStreamingInputBindings()
+            return [
+                .streamingSessionSet(nil),
+                .sessionAttachmentStateSet(.detached)
+            ]
+        }
+
+        environment.input.setupControllerObservation(session)
+        session.setVibrationHandler { report in
+            Task { @MainActor in
+                environment.input.routeVibration(report)
+            }
+        }
+
+        return [
+            .streamingSessionSet(session),
+            .sessionAttachmentStateSet(.attached)
+        ]
+    }
+
+    func disconnect(
+        session: (any StreamingSessionFacade)?,
+        reason: StreamingDisconnectIntent = .userInitiated
+    ) async {
+        await session?.disconnect(reason: reason)
+    }
+
+    func detach(
+        environment: StreamRuntimeAttachmentEnvironment
+    ) -> [StreamAction] {
+        lifecycleObserver.bind(session: nil, onLifecycleChange: { _ in })
+        environment.input.clearStreamingInputBindings()
+        return [
+            .streamingSessionSet(nil),
+            .sessionAttachmentStateSet(.detached)
+        ]
+    }
+
+    func reset(environment: StreamRuntimeAttachmentEnvironment) {
+        lifecycleObserver.reset()
+        environment.input.clearStreamingInputBindings()
+    }
+}

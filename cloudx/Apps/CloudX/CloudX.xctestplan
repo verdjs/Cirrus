@@ -1,0 +1,43 @@
+{
+  "configurations" : [
+    {
+      "id" : "F0BD0202-CBF7-4609-9483-68012657890B",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "-cloudx-app-logs"
+      }
+    ],
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:CloudX.xcodeproj",
+      "identifier" : "AA0005000000000000000001",
+      "name" : "CloudX"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:CloudX.xcodeproj",
+        "identifier" : "24B4E9C0DBE061C9ACF262FC",
+        "name" : "CloudXTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:CloudX.xcodeproj",
+        "identifier" : "AB1005000000000000000001",
+        "name" : "CloudXUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

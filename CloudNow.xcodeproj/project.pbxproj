@@ -1,0 +1,544 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA0001000000000000000017 /* WebRTC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA0002000000000000000014 /* WebRTC.xcframework */; };
+		AA0001000000000000000018 /* WebRTC.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AA0002000000000000000014 /* WebRTC.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BA274A222FC2784D00FDEF85 /* LiveKitWebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = BA274A212FC2784D00FDEF85 /* LiveKitWebRTC */; };
+		BA44F9E72FC255240079F067 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = A30000000000000000000023 /* AsyncAlgorithms */; };
+		BA44F9E82FC255240079F067 /* CloudXModels in Frameworks */ = {isa = PBXBuildFile; productRef = AA0009000000000000000001 /* CloudXModels */; };
+		BA44F9E92FC255240079F067 /* InputBridge in Frameworks */ = {isa = PBXBuildFile; productRef = AA0009000000000000000002 /* InputBridge */; };
+		BA44F9EA2FC255240079F067 /* XCloudAPI in Frameworks */ = {isa = PBXBuildFile; productRef = AA0009000000000000000003 /* XCloudAPI */; };
+		BA44F9EB2FC255240079F067 /* StreamingCore in Frameworks */ = {isa = PBXBuildFile; productRef = AA0009000000000000000004 /* StreamingCore */; };
+		BA44F9EC2FC255240079F067 /* DiagnosticsKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA0009000000000000000005 /* DiagnosticsKit */; };
+		BA44F9ED2FC255240079F067 /* CloudXCore in Frameworks */ = {isa = PBXBuildFile; productRef = AA0009000000000000000007 /* CloudXCore */; };
+		BA44F9EE2FC255240079F067 /* VideoRenderingKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA0009000000000000000008 /* VideoRenderingKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AA0001000000000000000010 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AA0001000000000000000018 /* WebRTC.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5A6F3F312F8A5B1C00C9DB31 /* CloudNow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudNow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0002000000000000000014 /* WebRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WebRTC.xcframework; path = cloudx/ThirdParty/WebRTC/WebRTC.xcframework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5A6F3F602F8A5F8700C9DB31 /* Exceptions for "CloudNow" folder in "CloudNow" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5A6F3F302F8A5B1C00C9DB31 /* CloudNow */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		5A6F3F332F8A5B1C00C9DB31 /* CloudNow */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5A6F3F602F8A5F8700C9DB31 /* Exceptions for "CloudNow" folder in "CloudNow" target */,
+			);
+			path = CloudNow;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5A6F3F2E2F8A5B1C00C9DB31 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA274A222FC2784D00FDEF85 /* LiveKitWebRTC in Frameworks */,
+				BA44F9EE2FC255240079F067 /* VideoRenderingKit in Frameworks */,
+				BA44F9ED2FC255240079F067 /* CloudXCore in Frameworks */,
+				BA44F9EC2FC255240079F067 /* DiagnosticsKit in Frameworks */,
+				BA44F9EB2FC255240079F067 /* StreamingCore in Frameworks */,
+				BA44F9EA2FC255240079F067 /* XCloudAPI in Frameworks */,
+				BA44F9E92FC255240079F067 /* InputBridge in Frameworks */,
+				BA44F9E82FC255240079F067 /* CloudXModels in Frameworks */,
+				BA44F9E72FC255240079F067 /* AsyncAlgorithms in Frameworks */,
+				AA0001000000000000000017 /* WebRTC.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5A6F3F282F8A5B1C00C9DB31 = {
+			isa = PBXGroup;
+			children = (
+				5A6F3F332F8A5B1C00C9DB31 /* CloudNow */,
+				5A6F3F322F8A5B1C00C9DB31 /* Products */,
+				AA0002000000000000000014 /* WebRTC.xcframework */,
+			);
+			sourceTree = "<group>";
+		};
+		5A6F3F322F8A5B1C00C9DB31 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5A6F3F312F8A5B1C00C9DB31 /* CloudNow.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5A6F3F302F8A5B1C00C9DB31 /* CloudNow */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5A6F3F3C2F8A5B1D00C9DB31 /* Build configuration list for PBXNativeTarget "CloudNow" */;
+			buildPhases = (
+				5A6F3F2D2F8A5B1C00C9DB31 /* Sources */,
+				5A6F3F2E2F8A5B1C00C9DB31 /* Frameworks */,
+				AA0001000000000000000010 /* Embed Frameworks */,
+				5A6F3F2F2F8A5B1C00C9DB31 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5A6F3F332F8A5B1C00C9DB31 /* CloudNow */,
+			);
+			name = CloudNow;
+			packageProductDependencies = (
+				A30000000000000000000023 /* AsyncAlgorithms */,
+				AA0009000000000000000001 /* CloudXModels */,
+				AA0009000000000000000002 /* InputBridge */,
+				AA0009000000000000000003 /* XCloudAPI */,
+				AA0009000000000000000004 /* StreamingCore */,
+				AA0009000000000000000005 /* DiagnosticsKit */,
+				AA0009000000000000000007 /* CloudXCore */,
+				AA0009000000000000000008 /* VideoRenderingKit */,
+				BA274A212FC2784D00FDEF85 /* LiveKitWebRTC */,
+			);
+			productName = CloudNow;
+			productReference = 5A6F3F312F8A5B1C00C9DB31 /* CloudNow.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5A6F3F292F8A5B1C00C9DB31 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					5A6F3F302F8A5B1C00C9DB31 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+				};
+			};
+			buildConfigurationList = 5A6F3F2C2F8A5B1C00C9DB31 /* Build configuration list for PBXProject "CloudNow" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5A6F3F282F8A5B1C00C9DB31;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				BA44E2062FC12DA80079F067 /* XCRemoteSwiftPackageReference "client-sdk-swift" */,
+				A30000000000000000000022 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
+				AA000A000000000000000001 /* XCLocalSwiftPackageReference "cloudx/Packages/CloudXModels" */,
+				AA000A000000000000000002 /* XCLocalSwiftPackageReference "cloudx/Packages/InputBridge" */,
+				AA000A000000000000000003 /* XCLocalSwiftPackageReference "cloudx/Packages/XCloudAPI" */,
+				AA000A000000000000000004 /* XCLocalSwiftPackageReference "cloudx/Packages/StreamingCore" */,
+				AA000A000000000000000005 /* XCLocalSwiftPackageReference "cloudx/Packages/DiagnosticsKit" */,
+				AA000A000000000000000007 /* XCLocalSwiftPackageReference "cloudx/Packages/CloudXCore" */,
+				AA000A000000000000000008 /* XCLocalSwiftPackageReference "cloudx/Packages/VideoRenderingKit" */,
+				BA274A202FC2784D00FDEF85 /* XCRemoteSwiftPackageReference "webrtc-xcframework" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 5A6F3F322F8A5B1C00C9DB31 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5A6F3F302F8A5B1C00C9DB31 /* CloudNow */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5A6F3F2F2F8A5B1C00C9DB31 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5A6F3F2D2F8A5B1C00C9DB31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5A6F3F3A2F8A5B1D00C9DB31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = QJBAS8766Q;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Debug;
+		};
+		5A6F3F3B2F8A5B1D00C9DB31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = QJBAS8766Q;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = appletvos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				TVOS_DEPLOYMENT_TARGET = 26.4;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5A6F3F3D2F8A5B1D00C9DB31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F3P5W6WCW8;
+				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/cloudx/ThirdParty/WebRTC",
+					"$(PROJECT_DIR)/cloudx/ThirdParty/WebRTC/WebRTC.xcframework/tvos-arm64-simulator",
+					"$(PROJECT_DIR)/cloudx/ThirdParty/WebRTC/WebRTC.xcframework/tvos-arm64",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CloudNow/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Cirrus;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "CloudNow uses the microphone for voice chat during GeForce NOW game sessions.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DWEBRTC_AVAILABLE";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ftfyfyfy.ojpjgfd;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "CloudNow/CloudNow-Bridging-Header.h";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		5A6F3F3E2F8A5B1D00C9DB31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F3P5W6WCW8;
+				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/cloudx/ThirdParty/WebRTC",
+					"$(PROJECT_DIR)/cloudx/ThirdParty/WebRTC/WebRTC.xcframework/tvos-arm64-simulator",
+					"$(PROJECT_DIR)/cloudx/ThirdParty/WebRTC/WebRTC.xcframework/tvos-arm64",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CloudNow/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Cirrus;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "CloudNow uses the microphone for voice chat during GeForce NOW game sessions.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DWEBRTC_AVAILABLE";
+				PRODUCT_BUNDLE_IDENTIFIER = com.owe.loudNow2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "CloudNow/CloudNow-Bridging-Header.h";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5A6F3F2C2F8A5B1C00C9DB31 /* Build configuration list for PBXProject "CloudNow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5A6F3F3A2F8A5B1D00C9DB31 /* Debug */,
+				5A6F3F3B2F8A5B1D00C9DB31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5A6F3F3C2F8A5B1D00C9DB31 /* Build configuration list for PBXNativeTarget "CloudNow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5A6F3F3D2F8A5B1D00C9DB31 /* Debug */,
+				5A6F3F3E2F8A5B1D00C9DB31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		AA000A000000000000000001 /* XCLocalSwiftPackageReference "cloudx/Packages/CloudXModels" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = cloudx/Packages/CloudXModels;
+		};
+		AA000A000000000000000002 /* XCLocalSwiftPackageReference "cloudx/Packages/InputBridge" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = cloudx/Packages/InputBridge;
+		};
+		AA000A000000000000000003 /* XCLocalSwiftPackageReference "cloudx/Packages/XCloudAPI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = cloudx/Packages/XCloudAPI;
+		};
+		AA000A000000000000000004 /* XCLocalSwiftPackageReference "cloudx/Packages/StreamingCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = cloudx/Packages/StreamingCore;
+		};
+		AA000A000000000000000005 /* XCLocalSwiftPackageReference "cloudx/Packages/DiagnosticsKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = cloudx/Packages/DiagnosticsKit;
+		};
+		AA000A000000000000000007 /* XCLocalSwiftPackageReference "cloudx/Packages/CloudXCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = cloudx/Packages/CloudXCore;
+		};
+		AA000A000000000000000008 /* XCLocalSwiftPackageReference "cloudx/Packages/VideoRenderingKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = cloudx/Packages/VideoRenderingKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A30000000000000000000022 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-async-algorithms";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		BA274A202FC2784D00FDEF85 /* XCRemoteSwiftPackageReference "webrtc-xcframework" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/livekit/webrtc-xcframework";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 144.7559.6;
+			};
+		};
+		BA44E2062FC12DA80079F067 /* XCRemoteSwiftPackageReference "client-sdk-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/livekit/client-sdk-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.14.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A30000000000000000000023 /* AsyncAlgorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A30000000000000000000022 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
+			productName = AsyncAlgorithms;
+		};
+		AA0009000000000000000001 /* CloudXModels */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000A000000000000000001 /* XCLocalSwiftPackageReference "cloudx/Packages/CloudXModels" */;
+			productName = CloudXModels;
+		};
+		AA0009000000000000000002 /* InputBridge */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000A000000000000000002 /* XCLocalSwiftPackageReference "cloudx/Packages/InputBridge" */;
+			productName = InputBridge;
+		};
+		AA0009000000000000000003 /* XCloudAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000A000000000000000003 /* XCLocalSwiftPackageReference "cloudx/Packages/XCloudAPI" */;
+			productName = XCloudAPI;
+		};
+		AA0009000000000000000004 /* StreamingCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000A000000000000000004 /* XCLocalSwiftPackageReference "cloudx/Packages/StreamingCore" */;
+			productName = StreamingCore;
+		};
+		AA0009000000000000000005 /* DiagnosticsKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000A000000000000000005 /* XCLocalSwiftPackageReference "cloudx/Packages/DiagnosticsKit" */;
+			productName = DiagnosticsKit;
+		};
+		AA0009000000000000000007 /* CloudXCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000A000000000000000007 /* XCLocalSwiftPackageReference "cloudx/Packages/CloudXCore" */;
+			productName = CloudXCore;
+		};
+		AA0009000000000000000008 /* VideoRenderingKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000A000000000000000008 /* XCLocalSwiftPackageReference "cloudx/Packages/VideoRenderingKit" */;
+			productName = VideoRenderingKit;
+		};
+		BA274A212FC2784D00FDEF85 /* LiveKitWebRTC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BA274A202FC2784D00FDEF85 /* XCRemoteSwiftPackageReference "webrtc-xcframework" */;
+			productName = LiveKitWebRTC;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 5A6F3F292F8A5B1C00C9DB31 /* Project object */;
+}
