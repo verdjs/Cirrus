@@ -100,4 +100,4 @@ See [credits.md](credits.md) for full attribution to the original projects and c
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+GPL v3 — see [LICENSE](LICENSE).
