@@ -95,5 +95,5 @@ You are free to copy, modify, and distribute this software under the terms of th
 
 The following original copyright notices are preserved as required by GPL v3:
 
-- Stratix — Copyright © 2024 nafields. Licensed under GPL v3.
+- Stratix — Copyright © 2026 nafields. Licensed under GPL v3.
 - CloudNow — Copyright © 2026 Owen Selles. Licensed under MIT.
