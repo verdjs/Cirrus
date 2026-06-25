@@ -23,12 +23,6 @@ struct AuthenticatedShellView: View {
         
         ZStack {
             CloudLibraryView()
-            
-            if shellBootstrapController.initialHydrationInProgress {
-                StartupLoadingView(statusText: shellBootstrapController.statusText)
-                    .transition(.opacity)
-            }
-            
             shellReadyMarker
             streamExitCompletionMarker
         }
@@ -229,62 +223,6 @@ func authenticatedShellProfilePresenceDetailText(profileSnapshot: ProfileShellSn
     }
 
     return "Xbox presence synced"
-}
-
-struct StartupLoadingView: View {
-    let statusText: String?
-    
-    var body: some View {
-        ZStack {
-            Color.black
-                .ignoresSafeArea()
-            
-            RadialGradient(
-                gradient: Gradient(colors: [
-                    Color(red: 0.1, green: 0.15, blue: 0.25).opacity(0.6),
-                    Color.black
-                ]),
-                center: .center,
-                startRadius: 100,
-                endRadius: 900
-            )
-            .ignoresSafeArea()
-            
-            VStack(spacing: 24) {
-                ZStack {
-                    Circle()
-                        .fill(Color.white.opacity(0.03))
-                        .frame(width: 120, height: 120)
-                        .overlay(
-                            Circle()
-                                .stroke(Color.white.opacity(0.1), lineWidth: 1)
-                        )
-                    
-                    Image(systemName: "cloud.fill")
-                        .font(.system(size: 60))
-                        .foregroundStyle(
-                            .linearGradient(
-                                colors: [.white, .white.opacity(0.6)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
-                }
-                .shadow(color: Color.blue.opacity(0.15), radius: 20, x: 0, y: 10)
-                
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                    .scaleEffect(1.2)
-                
-                Text(statusText ?? "Loading Cirrus...")
-                    .font(.headline)
-                    .foregroundStyle(.white.opacity(0.85))
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 40)
-                    .animation(.easeInOut, value: statusText)
-            }
-        }
-    }
 }
 
 #if DEBUG
