@@ -73,7 +73,7 @@ struct ConsoleListView: View {
 
     private var rootContent: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 30) {
+            VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("My Consoles")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
@@ -84,27 +84,7 @@ struct ConsoleListView: View {
                         .foregroundStyle(CloudXTheme.Colors.textSecondary)
                 }
 
-                HStack(spacing: 32) {
-                    Label("Xbox on & remote play active", systemImage: "tv.fill")
-                    Label("Instant-On/Sleep mode", systemImage: "bolt.fill")
-                    Label("Low-latency network", systemImage: "wifi")
-                }
-                .font(.system(size: 15, weight: .semibold, design: .rounded))
-                .foregroundStyle(CloudXTheme.Colors.textSecondary)
-
-                Divider()
-                    .background(Color.white.opacity(0.15))
-
-                VStack(alignment: .leading, spacing: 20) {
-                    if !consoleController.isLoading && !consoleController.consoles.isEmpty {
-                        Text("AVAILABLE CONSOLES")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
-                            .foregroundStyle(CloudXTheme.Colors.textPrimary.opacity(0.6))
-                            .padding(.leading, 8)
-                    }
-
-                    contentSection
-                }
+                contentSection
             }
             .padding(.top, 40)
             .padding(.horizontal, CloudXTheme.Layout.outerPadding)
@@ -186,7 +166,7 @@ struct ConsoleListView: View {
                             }
 
                             HStack(spacing: 12) {
-                                Text(console.consoleType)
+                                Text(friendlyConsoleType(for: console.consoleType))
                                     .font(.system(size: 14, weight: .medium, design: .rounded))
                                     .foregroundStyle(Color.secondary)
 
@@ -240,6 +220,15 @@ struct ConsoleListView: View {
             return "tv.fill"
         }
         return "gamecontroller.fill"
+    }
+
+    private func friendlyConsoleType(for type: String) -> String {
+        let lower = type.lowercased()
+        if lower.contains("seriesx") { return "Xbox Series X" }
+        if lower.contains("seriess") { return "Xbox Series S" }
+        if lower.contains("series") { return "Xbox Series X|S" }
+        if lower.contains("one") { return "Xbox One" }
+        return type
     }
 
     private func powerColor(for state: String) -> Color {

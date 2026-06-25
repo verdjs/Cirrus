@@ -6,9 +6,5 @@
 	<array>
 		<string>com.owenselles.CloudNow.tokenRefresh</string>
 	</array>
-	<key>CFBundleDisplayName</key>
-	<string>Cirrus</string>
-	<key>CFBundleName</key>
-	<string>Cirrus</string>
 </dict>
 </plist>

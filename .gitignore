@@ -21,7 +21,7 @@ build/
 # Swift Package Manager
 .build/
 .swiftpm/
-Packages/
+/Packages/
 Package.resolved
 
 # CocoaPods (not used but just in case)
