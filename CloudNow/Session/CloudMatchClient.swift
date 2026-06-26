@@ -283,6 +283,10 @@ actor CloudMatchClient {
             ])
 
         let body = buildSessionRequestBody(input)
+        if let bodyData = try? JSONSerialization.data(withJSONObject: body),
+           let bodyStr = String(data: bodyData, encoding: .utf8) {
+            print("[StreamViewLog] Sending createSession body: \(bodyStr)")
+        }
         var request = URLRequest(url: params)
         request.httpMethod = "POST"
         for (k, v) in gfnHeaders(token: input.token, clientId: clientId, deviceId: deviceId, includeOrigin: true) {
