@@ -116,6 +116,20 @@ private struct AnyCodableStringArray: Decodable {
     }
 }
 
+private struct AnyCodableAppId: Decodable {
+    let value: String?
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let intVal = try? container.decode(Int.self) {
+            value = String(intVal)
+        } else if let strVal = try? container.decode(String.self) {
+            value = strVal
+        } else {
+            value = nil
+        }
+    }
+}
+
 private struct GetSessionsResponse: Decodable {
     let requestStatus: RequestStatus
     let sessions: [SessionEntry]?
@@ -130,7 +144,7 @@ private struct GetSessionsResponse: Decodable {
         let connectionInfo: [ConnEntry]?
         let sessionControlInfo: CtrlEntry?
 
-        struct SessionRequestData: Decodable { let appId: String? }
+        struct SessionRequestData: Decodable { let appId: AnyCodableAppId? }
         struct ConnEntry: Decodable { let ip: AnyCodableString?; let port: Int?; let usage: Int? }
         struct CtrlEntry: Decodable { let ip: AnyCodableString? }
     }
@@ -151,10 +165,11 @@ nonisolated private func buildSessionRequestBody(_ input: SessionCreateRequest) 
     let streamProfile = is4K ? 1 : 0
     // Always send the user-configured bitrate so GFN can allocate enough bandwidth for 4K
     let maxBitrateKbps = input.settings.maxBitrateKbps
+    let appIdInt = Int(input.appId) ?? 0
 
     return [
         "sessionRequestData": [
-            "appId": input.appId,
+            "appId": appIdInt,
             "internalTitle": input.internalTitle as Any,
             "availableSupportedControllers": [],
             "networkTestSessionId": NSNull(),
@@ -320,7 +335,7 @@ actor CloudMatchClient {
         let (data, _) = try await urlSession.data(for: request)
         let resp = try JSONDecoder().decode(GetSessionsResponse.self, from: data)
         return (resp.sessions ?? []).filter { $0.status == 1 || $0.status == 2 || $0.status == 3 }.map { entry in
-            let appId = entry.sessionRequestData?.appId
+            let appId = entry.sessionRequestData?.appId?.value
             let sigConn = entry.connectionInfo?.first { $0.usage == 14 && $0.ip?.value != nil }
                        ?? entry.connectionInfo?.first { $0.ip?.value != nil }
             let serverIp = sigConn?.ip?.value ?? entry.sessionControlInfo?.ip?.value
