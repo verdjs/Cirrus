@@ -8,7 +8,7 @@ nonisolated private func gfnHeaders(token: String, clientId: String, deviceId: S
         "Authorization": "GFNJWT \(token)",
         "Content-Type": "application/json",
         "nv-browser-type": "CHROME",
-        "nv-client-id": clientId,
+        "nv-client-id": "ec7e38d4-03af-4b58-b131-cfb0495903ab",
         "nv-client-streamer": "NVIDIA-CLASSIC",
         "nv-client-type": "NATIVE",
         "nv-client-version": "2.0.85.135",
@@ -152,7 +152,7 @@ private struct GetSessionsResponse: Decodable {
 
 // MARK: - Session Request Body
 
-nonisolated private func buildSessionRequestBody(_ input: SessionCreateRequest) -> [String: Any] {
+nonisolated private func buildSessionRequestBody(_ input: SessionCreateRequest, deviceId: String) -> [String: Any] {
     let resolutionParts = input.settings.resolution.split(separator: "x")
     let width = Int(resolutionParts.first ?? "1920") ?? 1920
     let height = Int(resolutionParts.last ?? "1080") ?? 1080
@@ -175,7 +175,7 @@ nonisolated private func buildSessionRequestBody(_ input: SessionCreateRequest) 
             "networkTestSessionId": NSNull(),
             "parentSessionId": NSNull(),
             "clientIdentification": "GFN-PC",
-            "deviceHashId": UUID().uuidString,
+            "deviceHashId": deviceId,
             "clientVersion": "2.0.85.135",
             "sdkVersion": "1.0",
             "streamerVersion": 1,
@@ -282,7 +282,7 @@ actor CloudMatchClient {
                 URLQueryItem(name: "languageCode", value: input.settings.gameLanguage),
             ])
 
-        let body = buildSessionRequestBody(input)
+        let body = buildSessionRequestBody(input, deviceId: deviceId)
         if let bodyData = try? JSONSerialization.data(withJSONObject: body),
            let bodyStr = String(data: bodyData, encoding: .utf8) {
             print("[StreamViewLog] Sending createSession body: \(bodyStr)")
