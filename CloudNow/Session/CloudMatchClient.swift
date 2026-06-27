@@ -2,20 +2,26 @@ import Foundation
 
 // MARK: - CloudMatch Headers
 
-nonisolated private func gfnHeaders(token: String, clientId: String, deviceId: String, includeOrigin: Bool = true) -> [String: String] {
+private func gfnHeaders(token: String, clientId: String, deviceId: String, includeOrigin: Bool = true) -> [String: String] {
+    // Generate a W3C traceparent header: 00-traceId(32 hex)-parentId(16 hex)-01
+    let traceId = (0..<32).map { _ in String(format: "%01x", Int.random(in: 0...15)) }.joined()
+    let parentId = (0..<16).map { _ in String(format: "%01x", Int.random(in: 0...15)) }.joined()
+    let traceparent = "00-\(traceId)-\(parentId)-01"
+
     var h: [String: String] = [
-        "User-Agent": NVIDIAAuth.userAgent,
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
         "Authorization": "GFNJWT \(token)",
         "Content-Type": "application/json",
         "nv-browser-type": "CHROME",
-        "nv-client-id": clientId,
-        "nv-client-streamer": "NVIDIA-CLASSIC",
-        "nv-client-type": "NATIVE",
-        "nv-client-version": "2.0.83.130",
-        "nv-device-make": "UNKNOWN",
+        "nv-client-id": "ec7e38d4-03af-4b58-b131-cfb0495903ab",
+        "nv-client-streamer": "WEBRTC",
+        "nv-client-type": "BROWSER",
+        "nv-client-version": "2.0.85.135",
+        "nv-device-make": "APPLE",
         "nv-device-model": "UNKNOWN",
-        "nv-device-os": "WINDOWS",
+        "nv-device-os": "MACOS",
         "nv-device-type": "DESKTOP",
+        "traceparent": traceparent,
         "x-device-id": deviceId,
     ]
     if includeOrigin {
@@ -156,40 +162,20 @@ nonisolated private func buildSessionRequestBody(_ input: SessionCreateRequest, 
     let resolutionParts = input.settings.resolution.split(separator: "x")
     let width = Int(resolutionParts.first ?? "1920") ?? 1920
     let height = Int(resolutionParts.last ?? "1080") ?? 1080
-    let tzOffset = -TimeZone.current.secondsFromGMT() * 1000
+    let tzOffset = TimeZone.current.secondsFromGMT() * 1000
     let isHdr = input.settings.colorQuality == .hdr10bit
 
     return [
         "sessionRequestData": [
-            "appId": Int(input.appId) ?? 0,
-            "internalTitle": input.internalTitle as Any,
-            "availableSupportedControllers": [],
-            "networkTestSessionId": NSNull(),
-            "parentSessionId": NSNull(),
-            "clientIdentification": "GFN-PC",
-            "deviceHashId": deviceId,
-            "clientVersion": "30.0",
-            "sdkVersion": "1.0",
-            "streamerVersion": 1,
-            "clientPlatformName": "windows",
-            "clientRequestMonitorSettings": [[
-                "monitorId": 0,
-                "positionX": 0,
-                "positionY": 0,
-                "widthInPixels": width,
-                "heightInPixels": height,
-                "framesPerSecond": input.settings.fps,
-                "sdrHdrMode": isHdr ? 1 : 0,
-                "displayData": isHdr ? [
-                    "desiredContentMaxLuminance": 1000,
-                    "desiredContentMinLuminance": 0,
-                    "desiredContentMaxFrameAverageLuminance": 500,
-                ] as Any : NSNull(),
-                "hdr10PlusGamingData": NSNull(),
-                "dpi": 100,
-            ]],
-            "useOps": true,
             "audioMode": 2,
+            "remoteControllersBitmap": 0,
+            "sdrHdrMode": isHdr ? 1 : 0,
+            "networkTestSessionId": NSNull(),
+            "availableSupportedControllers": [],
+            "clientVersion": "30.0",
+            "deviceHashId": deviceId,
+            "internalTitle": NSNull(),
+            "clientPlatformName": "browser",
             "metaData": [
                 ["key": "SubSessionId", "value": UUID().uuidString],
                 ["key": "wssignaling", "value": "1"],
@@ -199,40 +185,48 @@ nonisolated private func buildSessionRequestBody(_ input: SessionCreateRequest, 
                 ["key": "clientPhysicalResolution", "value": "{\"horizontalPixels\":\(width),\"verticalPixels\":\(height)}"],
                 ["key": "surroundAudioInfo", "value": "2"],
             ],
-            "sdrHdrMode": isHdr ? 1 : 0,
+            "surroundAudioInfo": 0,
+            "clientTimezoneOffset": tzOffset,
+            "clientIdentification": "GFN-PC",
+            "parentSessionId": NSNull(),
+            "appId": input.appId,
+            "streamerVersion": 1,
+            "clientRequestMonitorSettings": [[
+                "widthInPixels": width,
+                "heightInPixels": height,
+                "framesPerSecond": input.settings.fps,
+                "sdrHdrMode": isHdr ? 1 : 0,
+                "displayData": [
+                    "desiredContentMaxLuminance": isHdr ? 1000 : 0,
+                    "desiredContentMinLuminance": 0,
+                    "desiredContentMaxFrameAverageLuminance": isHdr ? 500 : 0,
+                ],
+                "dpi": 0,
+            ]],
+            "appLaunchMode": 1,
+            "sdkVersion": "1.0",
+            "enhancedStreamMode": 1,
+            "useOps": true,
             "clientDisplayHdrCapabilities": isHdr ? [
                 "version": 1,
                 "hdrEdrSupportedFlagsInUint32": 1,
                 "staticMetadataDescriptorId": 0,
             ] : NSNull(),
-            "surroundAudioInfo": 0,
-            "remoteControllersBitmap": 0,
-            "clientTimezoneOffset": tzOffset,
-            "enhancedStreamMode": 1,
-            "appLaunchMode": 1,
-            "secureRTSPSupported": false,
-            "partnerCustomData": "",
             "accountLinked": input.accountLinked,
-            "enablePersistingInGameSettings": true,
-            "userAge": 26,
+            "partnerCustomData": "",
+            "enablePersistingInGameSettings": false,
+            "secureRTSPSupported": false,
+            "userAge": 25,
             "requestedStreamingFeatures": [
                 "reflex": input.settings.fps >= 120,
-                "bitDepth": input.settings.colorQuality.bitDepth,
+                "bitDepth": isHdr ? 10 : 0,
                 "cloudGsync": false,
                 "enabledL4S": input.settings.enableL4S,
-                "mouseMovementFlags": 0,
-                "trueHdr": isHdr,
-                "supportedHidDevices": 0,
-                "profile": 0,
+                "profile": 1,
                 "fallbackToLogicalResolution": false,
-                "hidDevices": NSNull(),
-                "chromaFormat": input.settings.colorQuality.chromaFormat,
+                "chromaFormat": isHdr ? input.settings.colorQuality.chromaFormat : 0,
                 "prefilterMode": 0,
-                "prefilterSharpness": 0,
-                "prefilterNoiseReduction": 0,
                 "hudStreamingMode": 0,
-                "sdrColorSpace": 2,
-                "hdrColorSpace": isHdr ? 4 : 0,
             ],
         ],
     ]
@@ -266,35 +260,60 @@ actor CloudMatchClient {
     func createSession(_ input: SessionCreateRequest) async throws -> SessionInfo {
         let clientId = UUID().uuidString
         let deviceId = UUID().uuidString
-        let base = input.streamingBaseUrl.map {
+        let preferredBase = input.streamingBaseUrl.map {
             $0.hasSuffix("/") ? String($0.dropLast()) : $0
         } ?? "https://prod.cloudmatchbeta.nvidiagrid.net"
-
-        let params = URLComponents(string: "\(base)/v2/session")!.url!
-            .appending(queryItems: [
-                URLQueryItem(name: "keyboardLayout", value: input.settings.keyboardLayout),
-                URLQueryItem(name: "languageCode", value: input.settings.gameLanguage),
-            ])
+        let fallbackBase = "https://prod.cloudmatchbeta.nvidiagrid.net"
 
         let body = buildSessionRequestBody(input, deviceId: deviceId)
-        if let bodyData = try? JSONSerialization.data(withJSONObject: body),
-           let bodyStr = String(data: bodyData, encoding: .utf8) {
-            print("[StreamViewLog] Sending createSession body: \(bodyStr)")
-        }
-        var request = URLRequest(url: params)
-        request.httpMethod = "POST"
-        for (k, v) in gfnHeaders(token: input.token, clientId: clientId, deviceId: deviceId, includeOrigin: true) {
-            request.setValue(v, forHTTPHeaderField: k)
-        }
-        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        let bodyData = try JSONSerialization.data(withJSONObject: body, options: [.sortedKeys])
+        print("[StreamViewLog] bodySize: \(bodyData.count) bytes")
+        let headers = gfnHeaders(token: input.token, clientId: clientId, deviceId: deviceId, includeOrigin: true)
+        let queryItems = [
+            URLQueryItem(name: "keyboardLayout", value: input.settings.keyboardLayout),
+            URLQueryItem(name: "languageCode", value: input.settings.gameLanguage),
+        ]
 
-        let (data, resp) = try await urlSession.data(for: request)
-        guard (resp as? HTTPURLResponse)?.statusCode == 200 else {
-            let msg = String(data: data, encoding: .utf8) ?? ""
-            throw CloudMatchError.sessionCreateFailed(msg)
+        let bases = preferredBase == fallbackBase ? [preferredBase] : [preferredBase, fallbackBase]
+        var lastError: Error?
+
+        for base in bases {
+            let params = URLComponents(string: "\(base)/v2/session")!.url!
+                .appending(queryItems: queryItems)
+            var request = URLRequest(url: params)
+            request.httpMethod = "POST"
+            for (k, v) in headers {
+                request.setValue(v, forHTTPHeaderField: k)
+            }
+            request.setValue("\(bodyData.count)", forHTTPHeaderField: "Content-Length")
+            request.httpBody = bodyData
+            print("[StreamViewLog] createSession POST \(params), appId=\(input.appId)")
+
+            do {
+                let (data, resp) = try await urlSession.data(for: request)
+                let statusCode = (resp as? HTTPURLResponse)?.statusCode ?? -1
+                print("[StreamViewLog] createSession response: HTTP \(statusCode)")
+                if statusCode == 200 {
+                    let payload = try JSONDecoder().decode(CloudMatchResponse.self, from: data)
+                    return try toSessionInfo(base: base, payload: payload, rawData: data, clientId: clientId, deviceId: deviceId)
+                }
+                let raw = String(data: data, encoding: .utf8) ?? ""
+                print("[StreamViewLog] createSession failed: HTTP \(statusCode) body: \(raw.prefix(500))")
+                // Clean up phantom session the server allocated despite the error
+                if let errPayload = try? JSONDecoder().decode(CloudMatchResponse.self, from: data),
+                   !errPayload.session.sessionId.isEmpty
+                {
+                    let sid = errPayload.session.sessionId
+                    print("[StreamViewLog] cleaning phantom session \(sid)")
+                    try? await stopSession(sessionId: sid, token: input.token, base: base)
+                }
+                lastError = CloudMatchError.sessionCreateFailed(raw)
+            } catch {
+                print("[StreamViewLog] createSession network error on \(base): \(error)")
+                lastError = error
+            }
         }
-        let payload = try JSONDecoder().decode(CloudMatchResponse.self, from: data)
-        return try toSessionInfo(base: base, payload: payload, rawData: data, clientId: clientId, deviceId: deviceId)
+        throw lastError!
     }
 
     // MARK: Poll Session
@@ -433,8 +452,8 @@ actor CloudMatchClient {
         }
 
         // Signaling server: usage=14
-        let sigConn = connections.first { $0.usage == 14 && $0.ip?.value != nil }
-                   ?? connections.first { $0.ip?.value != nil }
+        let sigConn = connections.first { $0.usage == 14 && $0.ip?.value != nil && !$0.ip!.value!.hasPrefix(".") }
+                   ?? connections.first { $0.ip?.value != nil && !$0.ip!.value!.hasPrefix(".") }
         let serverIp = sigConn?.ip?.value ?? s.sessionControlInfo?.ip?.value ?? ""
         let resourcePath = sigConn?.resourcePath ?? "/nvst/"
         let signalingUrl = resolveSignalingUrl(serverIp: serverIp, resourcePath: resourcePath)
