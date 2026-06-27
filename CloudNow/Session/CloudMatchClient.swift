@@ -167,80 +167,88 @@ nonisolated private func buildSessionRequestBody(_ input: SessionCreateRequest, 
     let maxBitrateKbps = input.settings.maxBitrateKbps
     let appIdInt = Int(input.appId) ?? 0
 
-    return [
-        "sessionRequestData": [
-            "appId": appIdInt,
-            "internalTitle": input.internalTitle as Any,
-            "availableSupportedControllers": [],
-            "networkTestSessionId": NSNull(),
-            "parentSessionId": NSNull(),
-            "clientIdentification": "GFN-PC",
-            "deviceHashId": deviceId,
-            "clientVersion": "2.0.85.135",
-            "sdkVersion": "1.0",
-            "streamerVersion": 1,
-            "clientPlatformName": "windows",
-            "clientRequestMonitorSettings": [[
-                "widthInPixels": width,
-                "heightInPixels": height,
-                "framesPerSecond": input.settings.fps,
-                "maxBitrateKbps": maxBitrateKbps,
-                "sdrHdrMode": isHdr ? 1 : 0,
-                "displayData": [
-                    "desiredContentMaxLuminance": isHdr ? 1000 : 0,
-                    "desiredContentMinLuminance": 0,
-                    "desiredContentMaxFrameAverageLuminance": isHdr ? 500 : 0,
-                ],
-                "dpi": 100,
-            ]],
-            "useOps": true,
-            "audioMode": 2,
-            "metaData": [
-                ["key": "SubSessionId", "value": UUID().uuidString],
-                ["key": "wssignaling", "value": "1"],
-                ["key": "GSStreamerType", "value": "WebRTC"],
-                ["key": "networkType", "value": "Unknown"],
-                ["key": "ClientImeSupport", "value": "0"],
-                ["key": "clientPhysicalResolution", "value": "{\"horizontalPixels\":\(width),\"verticalPixels\":\(height)}"],
-                ["key": "surroundAudioInfo", "value": "2"],
-            ],
+    var sessionRequestData: [String: Any] = [
+        "appId": appIdInt,
+        "availableSupportedControllers": [],
+        "clientIdentification": "GFN-PC",
+        "deviceHashId": deviceId,
+        "clientVersion": "2.0.85.135",
+        "sdkVersion": "1.0",
+        "streamerVersion": 1,
+        "clientPlatformName": "windows",
+        "clientRequestMonitorSettings": [[
+            "widthInPixels": width,
+            "heightInPixels": height,
+            "framesPerSecond": input.settings.fps,
+            "maxBitrateKbps": maxBitrateKbps,
             "sdrHdrMode": isHdr ? 1 : 0,
-            "clientDisplayHdrCapabilities": isHdr ? [
-                "version": 1,
-                "hdrEdrSupportedFlagsInUint32": 1,
-                "staticMetadataDescriptorId": 0,
-            ] : NSNull(),
-            "surroundAudioInfo": 0,
-            "remoteControllersBitmap": 0,
-            "clientTimezoneOffset": tzOffset,
-            "enhancedStreamMode": enhancedStreamMode,
-            "appLaunchMode": 1,
-            "secureRTSPSupported": false,
-            "partnerCustomData": "",
-            "accountLinked": input.accountLinked,
-            "enablePersistingInGameSettings": true,
-            "userAge": 26,
-            "requestedStreamingFeatures": [
-                "reflex": input.settings.fps >= 120,
-                "bitDepth": input.settings.colorQuality.bitDepth,
-                "cloudGsync": false,
-                "enabledL4S": input.settings.enableL4S,
-                "mouseMovementFlags": 0,
-                "trueHdr": isHdr,
-                "supportedHidDevices": 0,
-                "profile": streamProfile,
-                "fallbackToLogicalResolution": false,
-                "hidDevices": NSNull(),
-                "chromaFormat": input.settings.colorQuality.chromaFormat,
-                "prefilterMode": 0,
-                "prefilterSharpness": 0,
-                "prefilterNoiseReduction": 0,
-                "hudStreamingMode": 0,
-                "sdrColorSpace": 2,
-                "hdrColorSpace": isHdr ? 4 : 0,
-                "maxBitrateKbps": maxBitrateKbps,
+            "displayData": [
+                "desiredContentMaxLuminance": isHdr ? 1000 : 0,
+                "desiredContentMinLuminance": 0,
+                "desiredContentMaxFrameAverageLuminance": isHdr ? 500 : 0,
             ],
+            "dpi": 100,
+        ]],
+        "useOps": true,
+        "audioMode": 2,
+        "metaData": [
+            ["key": "SubSessionId", "value": UUID().uuidString],
+            ["key": "wssignaling", "value": "1"],
+            ["key": "GSStreamerType", "value": "WebRTC"],
+            ["key": "networkType", "value": "Unknown"],
+            ["key": "ClientImeSupport", "value": "0"],
+            ["key": "clientPhysicalResolution", "value": "{\"horizontalPixels\":\(width),\"verticalPixels\":\(height)}"],
+            ["key": "surroundAudioInfo", "value": "2"],
         ],
+        "sdrHdrMode": isHdr ? 1 : 0,
+        "surroundAudioInfo": 0,
+        "remoteControllersBitmap": 0,
+        "clientTimezoneOffset": tzOffset,
+        "enhancedStreamMode": enhancedStreamMode,
+        "appLaunchMode": 1,
+        "secureRTSPSupported": false,
+        "partnerCustomData": "",
+        "accountLinked": input.accountLinked,
+        "enablePersistingInGameSettings": true,
+        "userAge": 26
+    ]
+
+    if let title = input.internalTitle {
+        sessionRequestData["internalTitle"] = title
+    }
+
+    if isHdr {
+        sessionRequestData["clientDisplayHdrCapabilities"] = [
+            "version": 1,
+            "hdrEdrSupportedFlagsInUint32": 1,
+            "staticMetadataDescriptorId": 0,
+        ]
+    }
+
+    let requestedStreamingFeatures: [String: Any] = [
+        "reflex": input.settings.fps >= 120,
+        "bitDepth": input.settings.colorQuality.bitDepth,
+        "cloudGsync": false,
+        "enabledL4S": input.settings.enableL4S,
+        "mouseMovementFlags": 0,
+        "trueHdr": isHdr,
+        "supportedHidDevices": 0,
+        "profile": streamProfile,
+        "fallbackToLogicalResolution": false,
+        "chromaFormat": input.settings.colorQuality.chromaFormat,
+        "prefilterMode": 0,
+        "prefilterSharpness": 0,
+        "prefilterNoiseReduction": 0,
+        "hudStreamingMode": 0,
+        "sdrColorSpace": 2,
+        "hdrColorSpace": isHdr ? 4 : 0,
+        "maxBitrateKbps": maxBitrateKbps
+    ]
+    
+    sessionRequestData["requestedStreamingFeatures"] = requestedStreamingFeatures
+
+    return [
+        "sessionRequestData": sessionRequestData
     ]
 }
 
