@@ -8,7 +8,7 @@ actor GamesClient {
     private static let panelsQueryHash = "f8e26265a5db5c20e1334a6872cf04b6e3970507697f6ae55a6ddefa5420daf0"
     private static let metadataQueryHash = "39187e85b6dcf60b7279a5f233288b0a8b69a8b1dbcfb5b25555afdcb988f0d7"
     private static let clientId = "ec7e38d4-03af-4b58-b131-cfb0495903ab"
-    private static let clientVersion = "2.0.80.173"
+    private static let clientVersion = "2.0.85.135"
 
     private let urlSession = URLSession.shared
 

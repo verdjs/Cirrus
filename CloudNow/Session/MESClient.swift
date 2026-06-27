@@ -44,7 +44,7 @@ actor MESClient {
         request.setValue("GFNJWT \(token)", forHTTPHeaderField: "Authorization")
         request.setValue("ec7e38d4-03af-4b58-b131-cfb0495903ab", forHTTPHeaderField: "nv-client-id")
         request.setValue("NATIVE", forHTTPHeaderField: "nv-client-type")
-        request.setValue("2.0.80.173", forHTTPHeaderField: "nv-client-version")
+        request.setValue("2.0.85.135", forHTTPHeaderField: "nv-client-version")
         request.setValue("NVIDIA-CLASSIC", forHTTPHeaderField: "nv-client-streamer")
         request.setValue("WINDOWS",        forHTTPHeaderField: "nv-device-os")
         request.setValue("DESKTOP",        forHTTPHeaderField: "nv-device-type")
