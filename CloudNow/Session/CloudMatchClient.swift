@@ -161,7 +161,7 @@ nonisolated private func buildSessionRequestBody(_ input: SessionCreateRequest, 
 
     return [
         "sessionRequestData": [
-            "appId": input.appId,
+            "appId": Int(input.appId) ?? 0,
             "internalTitle": input.internalTitle as Any,
             "availableSupportedControllers": [],
             "networkTestSessionId": NSNull(),
